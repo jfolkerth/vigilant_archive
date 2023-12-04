@@ -6,3 +6,8 @@ edition = "2021"
 [dependencies]
 # this is the development version of Yew
 yew = { git = "https://github.com/yewstack/yew/", features = ["csr"] }
+
+[dev-dependencies.cargo-husky]
+version = "1"
+default-features = false # Disable features which are enabled by default
+features = ["precommit-hook", "run-cargo-check", "run-cargo-test", "run-cargo-clippy", "run-cargo-fmt"]
