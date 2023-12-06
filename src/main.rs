@@ -1,24 +1,20 @@
-use yew::prelude::*;
+use askama::Template;
+use axum::response::IntoResponse;
+use axum::{routing::get, Router};
 
-#[function_component]
-fn App() -> Html {
-    let counter = use_state(|| 0);
-    let onclick = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter + 1;
-            counter.set(value);
-        }
-    };
-
-    html! {
-        <div>
-            <button {onclick}>{ "+1" }</button>
-            <p>{ *counter }</p>
-        </div>
-    }
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/", get(hello));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
-fn main() {
-    yew::Renderer::<App>::new().render();
+async fn hello() -> impl IntoResponse {
+    HelloTemplate { name: "world" }
+}
+
+#[derive(Template)]
+#[template(path = "hello.html")]
+struct HelloTemplate<'a> {
+    name: &'a str,
 }
