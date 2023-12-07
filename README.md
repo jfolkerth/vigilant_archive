@@ -10,6 +10,6 @@ The project name comes from a combination of GitHub's random repo name suggestio
 
 ## Local Development
 
-This project assumes a local rust setup with cargo and common tools like clippy and rustfmt. Trunk is used for packaging and serving the webapp. Follow the instructions for the relevant tooling to install.
+This project assumes a local rust setup with cargo and common tools like clippy and rustfmt. Follow the instructions for the relevant tooling to install.
 
-Standard cargo commands are used for build and test. `trunk serve` will run a local instance of the webapp.
+Standard cargo commands are used for build and test. The standalone tailwind cli is used for generating css styles. The command to run that is `<path/to/standalone/cli> -i static/input.css -o static/output.css`.
