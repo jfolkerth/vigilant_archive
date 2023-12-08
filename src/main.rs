@@ -7,7 +7,7 @@ use axum::{routing::get, Router};
 async fn main() {
     let app = Router::new()
         .route("/", get(hello))
-        .route("/static/output.css", get(css));
+        .route("/static/styles.css", get(css));
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
@@ -25,6 +25,6 @@ struct HelloTemplate<'a> {
 async fn css() -> impl IntoResponse {
     let mut headers = HeaderMap::new();
     headers.insert(header::CONTENT_TYPE, "text/css".parse().unwrap());
-    let stylesheet: &str = include_str!("../static/output.css");
+    let stylesheet: &str = include_str!("../static/styles.css");
     (StatusCode::OK, headers, stylesheet)
 }
