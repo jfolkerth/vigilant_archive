@@ -1,6 +1,7 @@
 # vigilant-archive
 
 ![Rust workflow](https://github.com/jfolkerth/vigilant_archive/actions/workflows/rust.yml/badge.svg)
+[![CodeQL](https://github.com/jfolkerth/vigilant_archive/actions/workflows/codeql.yml/badge.svg)](https://github.com/jfolkerth/vigilant_archive/actions/workflows/codeql.yml)
 
 ## Description
 
