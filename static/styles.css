@@ -549,6 +549,10 @@ video {
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
 .text-center {
   text-align: center;
 }

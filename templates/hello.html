@@ -1,4 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>Hello, {{ name }}!</p>
+    <div class="p-6">
+        <p id="welcome">Hello, {{ name }}!</p>
+        <button hx-get="/clicked" hx-trigger="click" hx-target="#welcome">
+            Click Me!
+        </button>
+    </div>
 {% endblock content %}
