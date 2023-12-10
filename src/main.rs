@@ -7,6 +7,7 @@ use axum::{routing::get, Router};
 async fn main() {
     let app = Router::new()
         .route("/", get(hello))
+        .route("/static/htmx.min.js", get(htmx))
         .route("/static/styles.css", get(css));
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
@@ -20,6 +21,11 @@ async fn hello() -> impl IntoResponse {
 #[template(path = "hello.html")]
 struct HelloTemplate<'a> {
     name: &'a str,
+}
+
+async fn htmx() -> impl IntoResponse {
+    let htmx: &str = include_str!("../static/htmx.min.js");
+    (StatusCode::OK, htmx)
 }
 
 async fn css() -> impl IntoResponse {
