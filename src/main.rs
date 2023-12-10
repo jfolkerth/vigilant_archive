@@ -1,4 +1,4 @@
-use axum::{Router, routing::get};
+use axum::{routing::get, Router};
 
 use crate::routes::clicked::clicked;
 use crate::routes::hello::hello;
