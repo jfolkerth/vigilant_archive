@@ -9,7 +9,11 @@ askama_axum = "0.4.0"
 axum = "0.7.2"
 tokio = { version = "1.34.0", features = ["rt", "rt-multi-thread", "macros"] }
 
+[dev-dependencies]
+reqwest = { version = "0.11.22", features = ["blocking", "json"] }
+serde = { version = "1.0.193", features = ["derive"] }
+
 [dev-dependencies.cargo-husky]
 version = "1"
-default-features = false # Disable features which are enabled by default
+default-features = false
 features = ["precommit-hook", "run-cargo-check", "run-cargo-test", "run-cargo-clippy", "run-cargo-fmt"]
