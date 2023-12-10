@@ -1269,9 +1269,11 @@ dependencies = [
  "askama_axum",
  "axum",
  "cargo-husky",
+ "http-body-util",
  "reqwest",
  "serde",
  "tokio",
+ "tower",
 ]
 
 [[package]]
