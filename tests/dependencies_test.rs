@@ -24,7 +24,7 @@ mod dependencies_test {
             .unwrap()
             .json()
             .unwrap();
-        assert_eq!("v3.3.6", response.tag_name);
+        assert_eq!("v3.4.0", response.tag_name);
     }
 
     #[test]
