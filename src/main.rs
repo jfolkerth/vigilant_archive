@@ -1,6 +1,6 @@
 use axum::{routing::get, Router};
 
-use crate::routes::clicked::clicked;
+use crate::routes::hello::clicked;
 use crate::routes::hello::hello;
 use crate::routes::htmx::htmx;
 use crate::routes::styles::css;

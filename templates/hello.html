@@ -2,7 +2,7 @@
 {% block content %}
     <div class="p-6">
         <p id="welcome">Hello, {{ name }}!</p>
-        <button hx-get="/clicked" hx-trigger="click" hx-target="#welcome">
+        <button hx-get="{{ route }}" hx-trigger="click" hx-target="#content">
             Click Me!
         </button>
     </div>
