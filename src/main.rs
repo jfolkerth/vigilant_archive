@@ -1,11 +1,11 @@
-use crate::router::router;
+use crate::app::app;
 
-mod router;
+mod app;
 mod routes;
 
 #[tokio::main]
 async fn main() {
-    let app = router();
+    let app = app();
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
