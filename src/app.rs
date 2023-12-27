@@ -16,10 +16,10 @@ pub fn app() -> Router {
 #[cfg(test)]
 mod app_tests {
     use askama_axum::{IntoResponse, Response};
-    use axum::body::Body;
-    use axum::http::{Request, StatusCode};
+    use axum::body::{Body, Bytes};
+    use axum::http::response::Parts;
+    use axum::http::Request;
     use http_body_util::BodyExt;
-    use std::future::Future;
     use tower::ServiceExt;
 
     use crate::app::app;
@@ -30,57 +30,53 @@ mod app_tests {
     #[tokio::test]
     async fn hello_route() {
         let response = send_request("/").await;
-        assert_ok_and_content_type(&response, "text/html; charset=utf-8");
-        assert_body_matches(response, hello()).await;
+        let expected = hello().await.into_response();
+        assert_status_headers_body_match(response, expected).await;
     }
 
     #[tokio::test]
     async fn clicked_route() {
         let response = send_request("/clicked").await;
-        assert_ok_and_content_type(&response, "text/html; charset=utf-8");
-        assert_body_matches(response, clicked()).await;
+        let expected = clicked().await.into_response();
+        assert_status_headers_body_match(response, expected).await;
     }
 
     #[tokio::test]
     async fn static_htmx_route() {
         let response = send_request("/static/htmx.min.js").await;
-        assert_ok_and_content_type(&response, "text/javascript");
-        assert_body_matches(response, htmx()).await;
+        let expected = htmx().await.into_response();
+        assert_status_headers_body_match(response, expected).await;
     }
 
     #[tokio::test]
     async fn static_css_route() {
         let response = send_request("/static/styles.css").await;
-        assert_ok_and_content_type(&response, "text/css");
-        assert_body_matches(response, css()).await;
+        let expected = css().await.into_response();
+        assert_status_headers_body_match(response, expected).await;
     }
 
     async fn send_request(route: &str) -> Response {
         let app = app();
         let request = Request::builder().uri(route).body(Body::empty()).unwrap();
-        let response = app.oneshot(request).await.unwrap();
-        response
+        app.oneshot(request).await.unwrap()
     }
 
-    fn assert_ok_and_content_type(response: &Response, expected_content_type: &str) {
-        assert_eq!(response.status(), StatusCode::OK);
-        let content_type = &response.headers()["Content-Type"];
-        assert_eq!(expected_content_type, content_type);
+    async fn assert_status_headers_body_match(response: Response, expected: Response) {
+        let (parts, body) = response.into_parts();
+        let (expected_parts, expected_body) = expected.into_parts();
+        assert_eq!(expected_parts.status, parts.status);
+        assert!(contains_all_headers(parts, expected_parts));
+        assert_eq!(to_bytes(expected_body).await, to_bytes(body).await);
     }
 
-    async fn assert_body_matches(
-        response: Response,
-        expected: impl Future<Output = impl IntoResponse + Sized> + Sized,
-    ) {
-        let body = response.into_body().collect().await.unwrap().to_bytes();
-        let expected_body = expected
-            .await
-            .into_response()
-            .into_body()
-            .collect()
-            .await
-            .unwrap()
-            .to_bytes();
-        assert_eq!(expected_body, body);
+    fn contains_all_headers(parts: Parts, expected_parts: Parts) -> bool {
+        expected_parts
+            .headers
+            .keys()
+            .all(|key| parts.headers.contains_key(key))
+    }
+
+    async fn to_bytes(expected_body: Body) -> Bytes {
+        expected_body.collect().await.unwrap().to_bytes()
     }
 }
