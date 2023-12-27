@@ -22,14 +22,12 @@ struct HelloTemplate<'a, 'b> {
 }
 
 #[cfg(test)]
-mod clicked_route_tests {
-    use std::str::from_utf8;
-
-    use askama_axum::{IntoResponse, Response};
-    use axum::body::to_bytes;
+mod hello_route_tests {
+    use askama_axum::IntoResponse;
     use axum::http::{header, StatusCode};
 
     use crate::routes::hello::{clicked, hello};
+    use crate::routes::route_tests_utils::into_string;
 
     #[tokio::test]
     async fn hello_has_status_ok() {
@@ -83,10 +81,5 @@ mod clicked_route_tests {
         let response = clicked().await.into_response();
         let body = into_string(response).await;
         assert!(body.contains("hx-get=\"/\""));
-    }
-
-    async fn into_string(response: Response) -> String {
-        let body = to_bytes(response.into_body(), usize::MAX).await.unwrap();
-        from_utf8(&body).unwrap_or_else(|_| "").parse().unwrap()
     }
 }
