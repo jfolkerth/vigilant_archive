@@ -1,6 +1,7 @@
 use axum::routing::get;
 use axum::Router;
 
+use crate::routes::characters::characters;
 use crate::routes::hello::{clicked, hello};
 use crate::routes::htmx::htmx;
 use crate::routes::styles::css;
@@ -8,6 +9,7 @@ use crate::routes::styles::css;
 pub fn app() -> Router {
     Router::new()
         .route("/", get(hello))
+        .route("/characters", get(characters))
         .route("/clicked", get(clicked))
         .route("/static/htmx.min.js", get(htmx))
         .route("/static/styles.css", get(css))
@@ -23,6 +25,7 @@ mod app_tests {
     use tower::ServiceExt;
 
     use crate::app::app;
+    use crate::routes::characters::characters;
     use crate::routes::hello::{clicked, hello};
     use crate::routes::htmx::htmx;
     use crate::routes::styles::css;
@@ -52,6 +55,13 @@ mod app_tests {
     async fn static_css_route() {
         let response = send_request("/static/styles.css").await;
         let expected = css().await.into_response();
+        assert_status_headers_body_match(response, expected).await;
+    }
+
+    #[tokio::test]
+    async fn characters_route() {
+        let response = send_request("/characters").await;
+        let expected = characters().await.into_response();
         assert_status_headers_body_match(response, expected).await;
     }
 
