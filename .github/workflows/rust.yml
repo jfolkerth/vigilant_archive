@@ -25,3 +25,5 @@ jobs:
       run: cargo clippy -- -D warnings
     - name: Format
       run: cargo fmt --all -- --check
+    - name: Docker build
+      run: docker build -t vigilant-archive .
