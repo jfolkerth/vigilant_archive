@@ -18,3 +18,7 @@ Standard cargo commands are used for build and test. The standalone tailwind cli
 ### Tests
 
 The dependencies test checks that the versions of certain libraries are up-to-date. Specifically this is used for tailwindcss because I've elected to use the standalone cli instead of adding node to the project just for managing this library and for htmx because hosting the file oneself is the recommended way to use it. Because GitHub's api requires a user agent to be set, the test reads the value from an environment variable VIGILANT_ARCHIVE_USER_AGENT.
+
+### Database
+
+Create a directory called "secrets" in the project root folder and define three files: postgres-db.txt, postgres-password.txt, and postgres-user.txt. Put whatever database name, password, and username you wish to use with the postgres database in the respective files. You can see how these are mapped in the compose.yaml file.

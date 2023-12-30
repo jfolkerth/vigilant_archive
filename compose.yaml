@@ -1,0 +1,33 @@
+services:
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB_FILE: /run/secrets/postgres-db
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_USER_FILE: /run/secrets/postgres-user
+    secrets:
+      - postgres-db
+      - postgres-password
+      - postgres-user
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+secrets:
+  postgres-db:
+    file: secrets/postgres-db.txt
+  postgres-password:
+    file: secrets/postgres-password.txt
+  postgres-user:
+    file: secrets/postgres-user.txt
+
+volumes:
+  pgdata:
