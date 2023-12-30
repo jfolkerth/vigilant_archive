@@ -15,5 +15,6 @@ dist/
 # IDE specific files
 .idea/
 
-# Docker compose secrets
+# Secrets
 secrets/
+.env
