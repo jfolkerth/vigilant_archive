@@ -8,7 +8,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  VIGILANT_ARCHIVE_USER_AGENT: ${{ secrets.VIGILANT_ARCHIVE_USER_AGENT }}
 
 jobs:
   build:
@@ -17,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-node@v4
+    - name: npm install
+      run: npm install
     - name: Build
       run: cargo build --verbose
     - name: Run tests
