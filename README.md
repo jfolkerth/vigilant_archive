@@ -13,11 +13,7 @@ The project name comes from a combination of GitHub's random repo name suggestio
 
 This project assumes a local rust setup with cargo and common tools like clippy and rustfmt. Follow the instructions for the relevant tooling to install.
 
-Standard cargo commands are used for build and test. The standalone tailwind cli is used for generating css styles. The command to run that is `<path/to/standalone/cli> -i static/input.css -o static/styles.css`.
-
-### Tests
-
-The dependencies test checks that the versions of certain libraries are up-to-date. Specifically this is used for tailwindcss because I've elected to use the standalone cli instead of adding node to the project just for managing this library and for htmx because hosting the file oneself is the recommended way to use it. Because GitHub's api requires a user agent to be set, the test reads the value from an environment variable VIGILANT_ARCHIVE_USER_AGENT.
+Standard cargo commands are used for build and test. Scripts for working with tailwind css are in the package.json.
 
 ### Database
 

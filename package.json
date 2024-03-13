@@ -1,0 +1,12 @@
+{
+  "name": "vigilant_archive",
+  "version": "1.0.0",
+  "scripts": {
+    "tailwind": "npx tailwindcss -i ./static/input.css -o ./static/styles.css",
+    "tailwind-watch": "npx tailwindcss -i ./static/input.css -o ./static/styles.css --watch"
+  },
+  "devDependencies": {
+    "htmx.org": "^1.9.10",
+    "tailwindcss": "^3.4.1"
+  }
+}

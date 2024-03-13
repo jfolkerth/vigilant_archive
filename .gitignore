@@ -18,3 +18,9 @@ dist/
 # Secrets
 secrets/
 .env
+
+# Node Modules
+node_modules/
+
+# Static files copied from dependencies
+static/htmx.min.js
