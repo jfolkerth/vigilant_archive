@@ -6,7 +6,7 @@
     "tailwind-watch": "npx tailwindcss -i ./static/input.css -o ./static/styles.css --watch"
   },
   "devDependencies": {
-    "htmx.org": "^1.9.10",
+    "htmx.org": "^1.9.11",
     "tailwindcss": "^3.4.1"
   }
 }
